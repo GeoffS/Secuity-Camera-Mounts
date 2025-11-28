@@ -4,9 +4,9 @@ include <../OpenSCAD_Lib/chamferedCylinders.scad>
 mountArcWidth = 22.2;
 mountArcDepth = 5;
 
-boltHeadDia = 21.6; // Hex
-boltThreadDia = 12.6;
-boltHeadRecessDepth = 7.5;
+boltHeadDia = 21.8; // Hex
+boltThreadDia = 12.65;
+boltHeadRecessDepth = 7.5 + 2.5;
 
 // https://www.mathopenref.com/arcradius.html
 // The formula for the radius is:
