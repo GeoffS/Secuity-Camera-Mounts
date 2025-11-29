@@ -72,12 +72,11 @@ module itemModule()
 				sideOffsetY = 26;
 				d = 20;
 				cz = 2;
+				h1 = 66.5;
+				h2 = 35;
 
 				doubleY() hull()
 				{
-					
-					h1 = 66.5;
-					h2 = 35;
 					translate([0,0,h2-h1]) simpleChamferedCylinderDoubleEnded(d=d, h=h1, cz=cz);
 					translate([0,sideOffsetY+antiRotationSupportDia/2,0]) simpleChamferedCylinderDoubleEnded(d=d, h=h2, cz=cz);
 				}
@@ -94,6 +93,7 @@ module itemModule()
 					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=7.5, cz=cz);
 					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=40, cz=cz);
 				}
+				doubleY() translate([0,sideOffsetY-3, h2+5]) rotate([0,90,0]) tcy([0,0,-50], d=20, h=100, $fn=4);
 
 				// Trim so the final piece doesn't extend below the extension:
 				tcu([-200, -200, -400-extensionZ], 400);
