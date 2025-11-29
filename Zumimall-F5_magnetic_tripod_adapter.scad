@@ -76,14 +76,13 @@ module itemModule()
 				doubleY() hull()
 				{
 					
-					h1 = 55;
-					h2 = 30;
+					h1 = 66.5;
+					h2 = 35;
 					translate([0,0,h2-h1]) simpleChamferedCylinderDoubleEnded(d=d, h=h1, cz=cz);
 					translate([0,sideOffsetY+antiRotationSupportDia/2,0]) simpleChamferedCylinderDoubleEnded(d=d, h=h2, cz=cz);
 				}
 
 				// Trim to the side:
-				// tcu([-100, -sideOffsetY, 7.5], [200, 2*sideOffsetY, 200]);
 				chamferDia = 10;
 				hull()
 				{
