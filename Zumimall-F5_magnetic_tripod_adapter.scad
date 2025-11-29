@@ -34,7 +34,7 @@ echo(str("extensionZ = ", extensionZ));
 
 antiRotationSupportDia = 15;
 
-ringOutsideDiameter = 30; //28.5; //26.6; 
+ringOutsideDiameter = 31;
 ringCircleDiameter = 3.7;
 ringTorusOffsetZ = 10+0.3;
 
@@ -66,7 +66,7 @@ module itemModule()
 			}
 		}
 
-		cameraLowerBodyDia = 48;
+		cameraLowerBodyDia = 50;
 		translate([+boltHeadDia/2, 0, cameraLowerBodyDia/2+9.7]) 
 		{
 			rotate([-90,0,0]) difference()
@@ -104,17 +104,29 @@ module itemModule()
 	}
 }
 
+module testPrint()
+{
+	difference()
+	{
+		itemModule();
+		tcu([-200, -200, -400], 400);
+	}
+}
+
 module clip(d=0)
 {
-	tcu([-200, -400-d, -200], 400);
+	// tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
 {
-	display() itemModule();
-	displayGhost() translate([0,0,ringTorusOffsetZ]) torus3a(outsideDiameter=ringOutsideDiameter, circleDiameter=ringCircleDiameter);
+	// display() itemModule();
+	// displayGhost() translate([0,0,ringTorusOffsetZ]) torus3a(outsideDiameter=ringOutsideDiameter, circleDiameter=ringCircleDiameter);
+
+	display() testPrint();
 }
 else
 {
-	itemModule();
+	// itemModule();
+	testPrint();
 }
