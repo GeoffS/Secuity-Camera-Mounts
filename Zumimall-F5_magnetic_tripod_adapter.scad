@@ -144,7 +144,7 @@ module sideSupportCylinder(d, x, y, z)
 	// d = 10;
 	translate([0, y-d/2, z+d/2]) rotate([0,90,0]) 
 	{
-		tcy([0,0,-100], d=d, h=200);
+		tcy([0,0,-100], d=d, h=200, $fn=4);
 	}
 }
 
@@ -153,7 +153,7 @@ module sideSupportCylinderChamfer(d, x, y, z, cz)
 	echo(str("sideSupportCylinderChamfer(): d, x, y, z, cz = ", d, ", ", x, ", ", y, ", ", z, ", ", cz));
 	translate([0, y-d/2, z+d/2]) rotate([0,90,0]) 
 	{
-		translate([0,0,x-d/2-cz]) cylinder(d2=16, d1=0, h=8);
+		translate([0,0,x-d/2-cz]) cylinder(d2=16, d1=0, h=8, $fn=4);
 	}
 }
 
