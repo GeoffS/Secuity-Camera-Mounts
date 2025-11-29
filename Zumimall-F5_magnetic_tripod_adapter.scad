@@ -50,6 +50,7 @@ module itemModule()
 			tsp([0,0,0], d=mountArcRadius*2);
 			// Extension:
 			translate([0,0,-extensionZ]) simpleChamferedCylinder(d=mountArcRadius*2, h=extensionZ, cz=2, flip=true);
+
 			// Sliping-down support:
 			difference()
 			{
@@ -64,10 +65,32 @@ module itemModule()
 				// Trim so the final piece doesn't extend below the extension:
 				tcu([-200, -200, -400-extensionZ], 400);
 			}
+			
+			// Side support:
+			doubleY() difference()
+			{
+				sideOffsetY = 26;
+
+				hull()
+				{
+					d = 20;
+					h1 = 55;
+					h2 = 30;
+					cz = 2;
+					translate([0,0,h2-h1]) simpleChamferedCylinderDoubleEnded(d=d, h=h1, cz=cz, flip=true);
+					translate([0,sideOffsetY+antiRotationSupportDia/2,0]) simpleChamferedCylinderDoubleEnded(d=d, h=h2, cz=cz, flip=true);
+				}
+
+				// Trim to the side:
+				tcu([-100, -sideOffsetY, 7.5], [200, 2*sideOffsetY, 200]);
+
+				// Trim so the final piece doesn't extend below the extension:
+				tcu([-200, -200, -400-extensionZ], 400);
+			}
 		}
 
 		cameraLowerBodyDia = 50;
-		translate([+boltHeadDia/2, 0, cameraLowerBodyDia/2+9.7]) 
+		translate([boltHeadDia/2, 0, cameraLowerBodyDia/2+9.7]) 
 		{
 			rotate([-90,0,0]) difference()
 			{
@@ -120,10 +143,10 @@ module clip(d=0)
 
 if(developmentRender)
 {
-	// display() itemModule();
+	display() itemModule();
 	// displayGhost() translate([0,0,ringTorusOffsetZ]) torus3a(outsideDiameter=ringOutsideDiameter, circleDiameter=ringCircleDiameter);
 
-	display() testPrint();
+	// display() testPrint();
 }
 else
 {
