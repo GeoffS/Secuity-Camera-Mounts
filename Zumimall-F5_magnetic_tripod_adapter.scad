@@ -4,10 +4,6 @@ include <../OpenSCAD_Lib/chamferedCylinders.scad>
 mountArcWidth = 22.2;
 mountArcDepth = 5;
 
-boltHeadDia = 21.8; // Hex
-boltThreadDia = 12.65;
-boltHeadRecessDepth = 7.5 + 2.5;
-
 // https://www.mathopenref.com/arcradius.html
 // The formula for the radius is:
 // r = h/2 + w^2/8h
@@ -18,6 +14,15 @@ boltHeadRecessDepth = 7.5 + 2.5;
 mountArcRadius = mountArcDepth/2 + (mountArcWidth*mountArcWidth)/(8*mountArcDepth); //14.6;
 echo(str("mountArcRadius = ", mountArcRadius));
 
+boltHeadDia = 21.8; // Hex
+boltThreadDia = 12.65;
+boltHeadRecessDepth = 1.405 + (7.5 + 2.5);
+boltThreadLength = 19; // 3/4"
+
+boltRecessOffsetZ = mountArcRadius-boltHeadRecessDepth;
+
+extensionZ = 20;
+
 $fn=360;
 
 module itemModule()
@@ -26,16 +31,20 @@ module itemModule()
 	{
 		union()
 		{
+			// Ball:
 			tsp([0,0,0], d=mountArcRadius*2);
+			// Extension:
+			translate([0,0,-extensionZ]) simpleChamferedCylinder(d=mountArcRadius*2, h=extensionZ, cz=2, flip=true);
+
 		}
 
 		// Bolt threaded part:
-		tcy([0,0,-100], d=boltThreadDia, h=200);
+		tcy([0,0,-boltThreadLength+boltRecessOffsetZ], d=boltThreadDia, h=200);
 		// Bolt head:
-		tcy([0,0,mountArcRadius-1.405-boltHeadRecessDepth], d=boltHeadDia, h=100, $fn=6);
+		tcy([0,0,boltRecessOffsetZ], d=boltHeadDia, h=100, $fn=6);
 
 		// Trim bottom:
-		tcu([-200, -200, -400], 400);
+		// tcu([-200, -200, -400], 400);
 	}
 }
 
