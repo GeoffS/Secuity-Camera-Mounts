@@ -16,7 +16,7 @@ mountArcRadius = mountArcDepth/2 + (mountArcWidth*mountArcWidth)/(8*mountArcDept
 echo(str("mountArcRadius = ", mountArcRadius));
 
 ballheadThreadHoleLength = 11.5;
-ballheadThreadHoleDia = 6.4;
+ballheadThreadHoleDia = 6.5;
 ballheadThreadStopDia = 8.5;
 balheadNutThickness = 4.7;
 
@@ -34,7 +34,11 @@ echo(str("extensionZ = ", extensionZ));
 
 antiRotationSupportDia = 15;
 
-$fn=360;
+ringOutsideDiameter = 28.5; //26.6; 
+ringCircleDiameter = 3.7;
+ringTorusOffsetZ = 10+1.0;
+
+// $fn=360;
 
 module itemModule()
 {
@@ -51,7 +55,6 @@ module itemModule()
 			{
 				hull()
 				{
-					
 					h1 = 42;
 					h2 = 20;
 					cz = 1;
@@ -63,22 +66,29 @@ module itemModule()
 			}
 		}
 
-		
-		bodyDia = 44;
-		translate([+boltHeadDia/2, 0, bodyDia/2+10]) rotate([-90,0,0]) tcy([0,0,-50], d=bodyDia, h=100);
+		cameraLowerBodyDia = 48;
+		translate([+boltHeadDia/2, 0, cameraLowerBodyDia/2+10]) 
+		{
+			rotate([-90,0,0]) difference()
+			{
+				tcy([0,0,-50], d=cameraLowerBodyDia, h=100);
+				tcu([-400,-200,-200], 400);
+			}
+		}
+		tcy([0,0,12], d=mountArcRadius*2, h=100);
 
 		// Recess for the rubber bit:
 		difference()
 		{
-			translate([0,0,10+0.5]) hull() torus3a(outsideDiameter=26.6, circleDiameter=3.5);
-			doubleY() tcu([-200, antiRotationSupportDia/2+1.94, -200], 400);
+			translate([0,0,ringTorusOffsetZ]) hull() torus3a(outsideDiameter=ringOutsideDiameter, circleDiameter=ringCircleDiameter);
+			doubleY() tcu([-200, antiRotationSupportDia/2+0.02, -200], 400);
 			tcu([-400, -200, -200], 400);
 		}
 
 		// Bolt threaded part:
 		tcy([0,0,boltThreadsOffsetZ], d=boltThreadDia, h=200);
 		// Bolt head:
-		tcy([0,0,boltRecessOffsetZ], d=boltHeadDia, h=100, $fn=6);
+		rotate([0,0,30]) tcy([0,0,boltRecessOffsetZ], d=boltHeadDia, h=100, $fn=6);
 
 		// Bolt to nut transition:
 		hull()
@@ -96,12 +106,13 @@ module itemModule()
 
 module clip(d=0)
 {
-	// tcu([-200, -400-d, -200], 400);
+	tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
 {
 	display() itemModule();
+	displayGhost() translate([0,0,ringTorusOffsetZ]) torus3a(outsideDiameter=ringOutsideDiameter, circleDiameter=ringCircleDiameter);
 }
 else
 {
