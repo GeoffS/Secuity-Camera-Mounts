@@ -34,9 +34,9 @@ echo(str("extensionZ = ", extensionZ));
 
 antiRotationSupportDia = 15;
 
-ringOutsideDiameter = 28.5; //26.6; 
+ringOutsideDiameter = 30; //28.5; //26.6; 
 ringCircleDiameter = 3.7;
-ringTorusOffsetZ = 10+1.0;
+ringTorusOffsetZ = 10+0.3;
 
 // $fn=360;
 
@@ -67,7 +67,7 @@ module itemModule()
 		}
 
 		cameraLowerBodyDia = 48;
-		translate([+boltHeadDia/2, 0, cameraLowerBodyDia/2+10]) 
+		translate([+boltHeadDia/2, 0, cameraLowerBodyDia/2+9.7]) 
 		{
 			rotate([-90,0,0]) difference()
 			{
@@ -106,7 +106,7 @@ module itemModule()
 
 module clip(d=0)
 {
-	// tcu([-200, -400-d, -200], 400);
+	tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
