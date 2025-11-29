@@ -106,7 +106,7 @@ module itemModule()
 
 module clip(d=0)
 {
-	tcu([-200, -400-d, -200], 400);
+	// tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
