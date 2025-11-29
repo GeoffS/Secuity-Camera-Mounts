@@ -67,22 +67,34 @@ module itemModule()
 			}
 			
 			// Side support:
-			doubleY() difference()
+			difference()
 			{
 				sideOffsetY = 26;
+				d = 20;
+				cz = 2;
 
-				hull()
+				doubleY() hull()
 				{
-					d = 20;
+					
 					h1 = 55;
 					h2 = 30;
-					cz = 2;
-					translate([0,0,h2-h1]) simpleChamferedCylinderDoubleEnded(d=d, h=h1, cz=cz, flip=true);
-					translate([0,sideOffsetY+antiRotationSupportDia/2,0]) simpleChamferedCylinderDoubleEnded(d=d, h=h2, cz=cz, flip=true);
+					translate([0,0,h2-h1]) simpleChamferedCylinderDoubleEnded(d=d, h=h1, cz=cz);
+					translate([0,sideOffsetY+antiRotationSupportDia/2,0]) simpleChamferedCylinderDoubleEnded(d=d, h=h2, cz=cz);
 				}
 
 				// Trim to the side:
-				tcu([-100, -sideOffsetY, 7.5], [200, 2*sideOffsetY, 200]);
+				// tcu([-100, -sideOffsetY, 7.5], [200, 2*sideOffsetY, 200]);
+				chamferDia = 10;
+				hull()
+				{
+					doubleY() sideSupportCylinder(d=chamferDia, x=d/2, y=sideOffsetY, z=7.5);
+					doubleY() sideSupportCylinder(d=chamferDia, x=d/2, y=sideOffsetY, z=40);
+				}
+				doubleX() hull()
+				{
+					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=7.5, cz=cz);
+					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=40, cz=cz);
+				}
 
 				// Trim so the final piece doesn't extend below the extension:
 				tcu([-200, -200, -400-extensionZ], 400);
@@ -124,6 +136,24 @@ module itemModule()
 		tcy([0,0,-100], d=ballheadThreadHoleDia, h=100);
 		// Ball-head nut recess:
 		tcy([0,0,-extensionZ+3.7], d=12.6, h=balheadNutThickness, $fn=6);
+	}
+}
+
+module sideSupportCylinder(d, x, y, z)
+{
+	// d = 10;
+	translate([0, y-d/2, z+d/2]) rotate([0,90,0]) 
+	{
+		tcy([0,0,-100], d=d, h=200);
+	}
+}
+
+module sideSupportCylinderChamfer(d, x, y, z, cz)
+{
+	echo(str("sideSupportCylinderChamfer(): d, x, y, z, cz = ", d, ", ", x, ", ", y, ", ", z, ", ", cz));
+	translate([0, y-d/2, z+d/2]) rotate([0,90,0]) 
+	{
+		translate([0,0,x-d/2-cz]) cylinder(d2=16, d1=0, h=8);
 	}
 }
 
