@@ -1,5 +1,6 @@
 include <../OpenSCAD_Lib/MakeInclude.scad>
 include <../OpenSCAD_Lib/chamferedCylinders.scad>
+include <../OpenSCAD_Lib/torus.scad>
 
 mountArcWidth = 22.2;
 mountArcDepth = 5;
@@ -31,6 +32,8 @@ echo(str("boltThreadsOffsetZ = ", boltThreadsOffsetZ));
 extensionZ = -boltThreadsOffsetZ + ballheadThreadHoleLength;
 echo(str("extensionZ = ", extensionZ));
 
+antiRotationSupportDia = 15;
+
 $fn=360;
 
 module itemModule()
@@ -48,20 +51,29 @@ module itemModule()
 			{
 				hull()
 				{
-					d = 15;
+					
 					h1 = 42;
 					h2 = 20;
 					cz = 1;
-					translate([0,0,h2-h1]) simpleChamferedCylinder(d=d, h=h1, cz=cz, flip=true);
-					translate([23,0,0]) simpleChamferedCylinder(d=d, h=h2, cz=cz, flip=true);
+					translate([0,0,h2-h1]) simpleChamferedCylinder(d=antiRotationSupportDia, h=h1, cz=cz, flip=true);
+					translate([23,0,0]) simpleChamferedCylinder(d=antiRotationSupportDia, h=h2, cz=cz, flip=true);
 				}
+				// Trim so the final piece doesn't extend below the extension:
 				tcu([-200, -200, -400-extensionZ], 400);
 			}
 		}
 
 		
-		bodyDia = 44; //2*15.5;
+		bodyDia = 44;
 		translate([+boltHeadDia/2, 0, bodyDia/2+10]) rotate([-90,0,0]) tcy([0,0,-50], d=bodyDia, h=100);
+
+		// Recess for the rubber bit:
+		difference()
+		{
+			translate([0,0,10+0.5]) hull() torus3a(outsideDiameter=26.6, circleDiameter=3.5);
+			doubleY() tcu([-200, antiRotationSupportDia/2+1.94, -200], 400);
+			tcu([-400, -200, -200], 400);
+		}
 
 		// Bolt threaded part:
 		tcy([0,0,boltThreadsOffsetZ], d=boltThreadDia, h=200);
@@ -84,7 +96,7 @@ module itemModule()
 
 module clip(d=0)
 {
-	tcu([-200, -400-d, -200], 400);
+	// tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
