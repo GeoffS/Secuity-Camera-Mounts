@@ -43,7 +43,25 @@ module itemModule()
 			tsp([0,0,0], d=mountArcRadius*2);
 			// Extension:
 			translate([0,0,-extensionZ]) simpleChamferedCylinder(d=mountArcRadius*2, h=extensionZ, cz=2, flip=true);
+			// Sliping-down support:
+			difference()
+			{
+				hull()
+				{
+					d = 15;
+					h1 = 42;
+					h2 = 20;
+					cz = 1;
+					translate([0,0,h2-h1]) simpleChamferedCylinder(d=d, h=h1, cz=cz, flip=true);
+					translate([23,0,0]) simpleChamferedCylinder(d=d, h=h2, cz=cz, flip=true);
+				}
+				tcu([-200, -200, -400-extensionZ], 400);
+			}
 		}
+
+		
+		bodyDia = 44; //2*15.5;
+		translate([+boltHeadDia/2, 0, bodyDia/2+10]) rotate([-90,0,0]) tcy([0,0,-50], d=bodyDia, h=100);
 
 		// Bolt threaded part:
 		tcy([0,0,boltThreadsOffsetZ], d=boltThreadDia, h=200);
