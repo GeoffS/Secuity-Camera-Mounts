@@ -20,7 +20,7 @@ ballheadThreadHoleDia = 6.5;
 ballheadThreadStopDia = 8.5;
 balheadNutThickness = 4.7;
 
-boltHeadDia = 21.8; // Hex
+boltHeadDia = 22; //21.8; // Hex
 boltThreadDia = max(12.65, 12.6); // 1/2" threads vs. 1/4" nut
 boltHeadRecessDepth = 1.405 + (7.5 + 2.5);
 boltThreadLength = 19; // 3/4"
@@ -56,7 +56,7 @@ module itemModule()
 			{
 				hull()
 				{
-					h1 = 42;
+					h1 = 38;
 					h2 = 20;
 					cz = 1;
 					translate([0,0,h2-h1]) simpleChamferedCylinder(d=antiRotationSupportDia, h=h1, cz=cz, flip=true);
@@ -69,29 +69,32 @@ module itemModule()
 			// Side support:
 			difference()
 			{
-				sideOffsetY = 26;
+				sideOffsetY = 55/2; //26;
 				d = 20;
 				cz = 2;
-				h1 = 66.5;
+				h1 = 45; //66.5;
 				h2 = 35;
 
 				doubleY() hull()
 				{
 					translate([0,0,h2-h1]) simpleChamferedCylinderDoubleEnded(d=d, h=h1, cz=cz);
-					translate([0,sideOffsetY+antiRotationSupportDia/2,0]) simpleChamferedCylinderDoubleEnded(d=d, h=h2, cz=cz);
+					translate([0,sideOffsetY+1,0]) simpleChamferedCylinderDoubleEnded(d=d, h=h2, cz=cz);
 				}
 
 				// Trim to the side:
 				chamferDia = 10;
+				z1 = 7.5;
+				z2 = 40;
+				yo2 = sideOffsetY + 0.3;
 				hull()
 				{
-					doubleY() sideSupportCylinder(d=chamferDia, x=d/2, y=sideOffsetY, z=7.5);
-					doubleY() sideSupportCylinder(d=chamferDia, x=d/2, y=sideOffsetY, z=40);
+					doubleY() sideSupportCylinder(d=chamferDia, x=d/2, y=sideOffsetY, z=z1);
+					doubleY() sideSupportCylinder(d=chamferDia, x=d/2, y=yo2, z=z2);
 				}
 				doubleX() hull()
 				{
-					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=7.5, cz=cz);
-					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=40, cz=cz);
+					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=z1, cz=cz);
+					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=yo2, z=z2, cz=cz);
 				}
 				doubleY() translate([0,sideOffsetY-3, h2+5]) rotate([0,90,0]) tcy([0,0,-50], d=20, h=100, $fn=4);
 
@@ -179,6 +182,6 @@ if(developmentRender)
 }
 else
 {
-	// itemModule();
-	testPrint();
+	itemModule();
+	// testPrint();
 }
