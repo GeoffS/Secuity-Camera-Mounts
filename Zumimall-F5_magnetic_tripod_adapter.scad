@@ -25,7 +25,7 @@ ballheadNutThickness = 4.7;
 ballheadNutRecessDia = 13;
 
 boltHeadDia = 22.5; // Hex
-boltThreadDia = 12.65; //max(12.65, 12.6); // 1/2" threads vs. 1/4" nut
+boltThreadDia = 12.65;
 boltHeadRecessDepth = 1.405 + (7.5 + 2.5);
 boltThreadLength = 19; // 3/4"
 
@@ -40,7 +40,7 @@ antiRotationSupportDia = 15;
 
 ringOutsideDiameter = 33;
 ringCircleDiameter = 6;
-ringTorusOffsetZ = 7.5 + ringCircleDiameter/2; //10+0.3-0.3;
+ringTorusOffsetZ = 7.5 + ringCircleDiameter/2;
 
 ballheadMountOffsetX = 30;
 ballheadMountOffsetZ = -extensionZ + 12;
@@ -93,10 +93,10 @@ module itemModule()
 			// Side support:
 			difference()
 			{
-				sideOffsetY = 26.5; //55/2; //26;
+				sideOffsetY = 26.5;
 				d = 20;
 				cz = 2;
-				h1 = 55; //45; //66.5;
+				h1 = 55;
 				h2 = 35;
 
 				doubleY() hull()
@@ -157,13 +157,6 @@ module itemModule()
 		// Bolt head:
 		rotate([0,0,30]) tcy([0,0,boltRecessOffsetZ], d=boltHeadDia, h=100, $fn=6);
 
-		// Bolt to nut transition:
-		// hull()
-		// {
-		// 	tcy([0,0,boltThreadsOffsetZ], d=boltThreadDia, h=0.1);
-		// 	#tcy([0,0,-extensionZ+3.7+ballheadNutThickness-nothing], d=12.6, h=0.1, $fn=6);
-		// }
-
 		// Bolt removal nut hole:
 		tcy([0,0,-100], d=ballheadThreadHoleDia, h=100);
 		// Bolt removal nut recess:
@@ -188,7 +181,6 @@ module itemModule()
 
 module sideSupportCylinder(d, x, y, z)
 {
-	// d = 10;
 	translate([0, y-d/2, z+d/2]) rotate([0,90,0]) 
 	{
 		tcy([0,0,-100], d=d, h=200, $fn=4);
