@@ -32,7 +32,7 @@ boltRecessOffsetZ = mountArcRadius-boltHeadRecessDepth;
 boltThreadsOffsetZ = -boltThreadLength+boltRecessOffsetZ;
 echo(str("boltThreadsOffsetZ = ", boltThreadsOffsetZ));
 
-extensionZ = -boltThreadsOffsetZ + ballheadThreadHoleLength;
+extensionZ = -boltThreadsOffsetZ + balheadNutThickness + 2;
 echo(str("extensionZ = ", extensionZ));
 
 antiRotationSupportDia = 15;
@@ -137,16 +137,16 @@ module itemModule()
 		rotate([0,0,30]) tcy([0,0,boltRecessOffsetZ], d=boltHeadDia, h=100, $fn=6);
 
 		// Bolt to nut transition:
-		hull()
-		{
-			tcy([0,0,boltThreadsOffsetZ], d=boltThreadDia, h=0.1);
-			tcy([0,0,-extensionZ+3.7+balheadNutThickness-nothing], d=12.6, h=0.1, $fn=6);
-		}
+		// hull()
+		// {
+		// 	tcy([0,0,boltThreadsOffsetZ], d=boltThreadDia, h=0.1);
+		// 	#tcy([0,0,-extensionZ+3.7+balheadNutThickness-nothing], d=12.6, h=0.1, $fn=6);
+		// }
 
-		// Ball-head threads:
+		// Bolt removal nut hole:
 		tcy([0,0,-100], d=ballheadThreadHoleDia, h=100);
-		// Ball-head nut recess:
-		tcy([0,0,-extensionZ+3.7], d=12.6, h=balheadNutThickness, $fn=6);
+		// Bolt removal nut recess:
+		tcy([0,0,boltThreadsOffsetZ-balheadNutThickness], d=12.6, h=100, $fn=6);
 	}
 }
 
@@ -179,7 +179,7 @@ module testPrint()
 
 module clip(d=0)
 {
-	// tcu([-200, -400-d, -200], 400);
+	tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
