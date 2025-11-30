@@ -180,6 +180,10 @@ module itemModule()
 			tcy([0,0,ballheadMountOffsetZ+3.7], d=ballheadNutRecessDia, h=10, $fn=6);
 		}
 	}
+
+	// Sacrificial layer in ball-head mount:
+	layerThickness = 0.2;
+	tcy([-ballheadMountOffsetX,0,-0+ballheadMountOffsetZ], d=ballheadThreadStopDia, h=layerThickness);
 }
 
 module sideSupportCylinder(d, x, y, z)
@@ -211,7 +215,7 @@ module testPrint()
 
 module clip(d=0)
 {
-	// tcu([-200, -400-d, -200], 400);
+	tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
