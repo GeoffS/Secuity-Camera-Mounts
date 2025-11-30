@@ -34,9 +34,9 @@ echo(str("extensionZ = ", extensionZ));
 
 antiRotationSupportDia = 15;
 
-ringOutsideDiameter = 31;
-ringCircleDiameter = 3.7;
-ringTorusOffsetZ = 10+0.3;
+ringOutsideDiameter = 33;
+ringCircleDiameter = 6;
+ringTorusOffsetZ = 7.5 + ringCircleDiameter/2; //10+0.3-0.3;
 
 // $fn=360;
 
@@ -51,7 +51,7 @@ module itemModule()
 			// Extension:
 			translate([0,0,-extensionZ]) simpleChamferedCylinder(d=mountArcRadius*2, h=extensionZ, cz=2, flip=true);
 
-			// Sliping-down support:
+			// Bottom support:
 			difference()
 			{
 				hull()
@@ -104,7 +104,7 @@ module itemModule()
 		}
 
 		cameraLowerBodyDia = 53;
-		translate([boltHeadDia/2, 0, cameraLowerBodyDia/2+9.7]) 
+		translate([boltHeadDia/2, 0, cameraLowerBodyDia/2+9.5]) 
 		{
 			rotate([-90,0,0]) difference()
 			{
@@ -117,7 +117,12 @@ module itemModule()
 		// Recess for the rubber bit:
 		difference()
 		{
-			translate([0,0,ringTorusOffsetZ]) hull() torus3a(outsideDiameter=ringOutsideDiameter, circleDiameter=ringCircleDiameter);
+			union()
+			{
+				translate([0,0,ringTorusOffsetZ]) hull() torus3a(outsideDiameter=ringOutsideDiameter, circleDiameter=ringCircleDiameter);
+				tcy([0,0,ringTorusOffsetZ], d=ringOutsideDiameter, h=100);
+			}
+			
 			doubleY() tcu([-200, antiRotationSupportDia/2+0.02, -200], 400);
 			tcu([-400, -200, -200], 400);
 		}
