@@ -72,7 +72,7 @@ module itemModule()
 			// Side support:
 			difference()
 			{
-				sideOffsetY = 55/2; //26;
+				sideOffsetY = 26.5; //55/2; //26;
 				d = 20;
 				cz = 2;
 				h1 = 55; //45; //66.5;
@@ -99,6 +99,7 @@ module itemModule()
 					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=sideOffsetY, z=z1, cz=cz);
 					doubleY() sideSupportCylinderChamfer(d=chamferDia, x=d/2, y=yo2, z=z2, cz=cz);
 				}
+				// Chamfers at the front parts of the side-support:
 				doubleY() translate([0,sideOffsetY-3, h2+5]) rotate([0,90,0]) tcy([0,0,-50], d=20, h=100, $fn=4);
 
 				// Trim so the final piece doesn't extend below the extension:
