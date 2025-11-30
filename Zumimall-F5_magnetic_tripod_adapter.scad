@@ -21,8 +21,8 @@ echo(str("mountArcRadius = ", mountArcRadius));
 ballheadThreadHoleLength = 11.5;
 ballheadThreadHoleDia = 6.5;
 ballheadThreadStopDia = 8.5;
-balheadNutThickness = 4.7;
-ballheadNutRecessDia = 12.6;
+ballheadNutThickness = 4.7;
+ballheadNutRecessDia = 12.7; //12.6;
 
 boltHeadDia = 22; //21.8; // Hex
 boltThreadDia = max(12.65, 12.6); // 1/2" threads vs. 1/4" nut
@@ -33,7 +33,7 @@ boltRecessOffsetZ = mountArcRadius-boltHeadRecessDepth;
 boltThreadsOffsetZ = -boltThreadLength+boltRecessOffsetZ;
 echo(str("boltThreadsOffsetZ = ", boltThreadsOffsetZ));
 
-extensionZ = -boltThreadsOffsetZ + balheadNutThickness + 2;
+extensionZ = -boltThreadsOffsetZ + ballheadNutThickness + 2;
 echo(str("extensionZ = ", extensionZ));
 
 antiRotationSupportDia = 15;
@@ -128,7 +128,7 @@ module itemModule()
 			}
 		}
 
-		cameraLowerBodyDia = 53;
+		cameraLowerBodyDia = 54;
 		translate([boltHeadDia/2, 0, cameraLowerBodyDia/2+9.4]) 
 		{
 			rotate([-90,0,0]) difference()
@@ -161,13 +161,13 @@ module itemModule()
 		// hull()
 		// {
 		// 	tcy([0,0,boltThreadsOffsetZ], d=boltThreadDia, h=0.1);
-		// 	#tcy([0,0,-extensionZ+3.7+balheadNutThickness-nothing], d=12.6, h=0.1, $fn=6);
+		// 	#tcy([0,0,-extensionZ+3.7+ballheadNutThickness-nothing], d=12.6, h=0.1, $fn=6);
 		// }
 
 		// Bolt removal nut hole:
 		tcy([0,0,-100], d=ballheadThreadHoleDia, h=100);
 		// Bolt removal nut recess:
-		tcy([0,0,boltThreadsOffsetZ-balheadNutThickness], d=ballheadNutRecessDia, h=100, $fn=6);
+		tcy([0,0,boltThreadsOffsetZ-ballheadNutThickness], d=ballheadNutRecessDia, h=100, $fn=6);
 		
 		// Ball-head mount:
 		translate([-ballheadMountOffsetX, 0, 0])
@@ -177,7 +177,7 @@ module itemModule()
 			// Recess for the stop on the ball-head threaded section:
 			tcy([0,0,-10+ballheadMountOffsetZ], d=ballheadThreadStopDia, h=10);
 			// Nut:
-			tcy([0,0,ballheadMountOffsetZ+3.7], d=ballheadNutRecessDia, h=10, $fn=6);
+			tcy([0,0,ballheadMountOffsetZ+3.7], d=ballheadNutRecessDia+0.1, h=10, $fn=6);
 		}
 	}
 
@@ -215,7 +215,7 @@ module testPrint()
 
 module clip(d=0)
 {
-	tcu([-200, -400-d, -200], 400);
+	// tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
