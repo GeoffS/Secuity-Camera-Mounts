@@ -20,12 +20,12 @@ echo(str("mountArcRadius = ", mountArcRadius));
 
 ballheadThreadHoleLength = 11.5;
 ballheadThreadHoleDia = 6.5;
-ballheadThreadStopDia = 8.5;
+ballheadThreadStopDia = 8.6;
 ballheadNutThickness = 4.7;
-ballheadNutRecessDia = 12.7; //12.6;
+ballheadNutRecessDia = 13;
 
-boltHeadDia = 22; //21.8; // Hex
-boltThreadDia = max(12.65, 12.6); // 1/2" threads vs. 1/4" nut
+boltHeadDia = 22.5; // Hex
+boltThreadDia = 12.65; //max(12.65, 12.6); // 1/2" threads vs. 1/4" nut
 boltHeadRecessDepth = 1.405 + (7.5 + 2.5);
 boltThreadLength = 19; // 3/4"
 
@@ -177,7 +177,7 @@ module itemModule()
 			// Recess for the stop on the ball-head threaded section:
 			tcy([0,0,-10+ballheadMountOffsetZ], d=ballheadThreadStopDia, h=10);
 			// Nut:
-			tcy([0,0,ballheadMountOffsetZ+3.7], d=ballheadNutRecessDia+0.1, h=10, $fn=6);
+			tcy([0,0,ballheadMountOffsetZ+3.7], d=ballheadNutRecessDia, h=10, $fn=6);
 		}
 	}
 
