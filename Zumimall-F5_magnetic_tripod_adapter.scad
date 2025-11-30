@@ -96,8 +96,8 @@ module itemModule()
 				sideOffsetY = 26.5;
 				d = 20;
 				cz = 2;
-				h1 = 55;
-				h2 = 35;
+				h1 = 62;
+				h2 = 42;
 
 				doubleY() hull()
 				{
@@ -128,7 +128,7 @@ module itemModule()
 			}
 		}
 
-		cameraLowerBodyDia = 54;
+		cameraLowerBodyDia = 55;
 		translate([boltHeadDia/2, 0, cameraLowerBodyDia/2+9.4]) 
 		{
 			rotate([-90,0,0]) difference()
