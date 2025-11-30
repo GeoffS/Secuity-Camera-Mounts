@@ -72,7 +72,7 @@ module itemModule()
 				sideOffsetY = 55/2; //26;
 				d = 20;
 				cz = 2;
-				h1 = 45; //66.5;
+				h1 = 55; //45; //66.5;
 				h2 = 35;
 
 				doubleY() hull()
