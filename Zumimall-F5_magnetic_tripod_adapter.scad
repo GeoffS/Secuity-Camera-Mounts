@@ -22,6 +22,7 @@ ballheadThreadHoleLength = 11.5;
 ballheadThreadHoleDia = 6.5;
 ballheadThreadStopDia = 8.5;
 balheadNutThickness = 4.7;
+ballheadNutRecessDia = 12.6;
 
 boltHeadDia = 22; //21.8; // Hex
 boltThreadDia = max(12.65, 12.6); // 1/2" threads vs. 1/4" nut
@@ -41,6 +42,12 @@ ringOutsideDiameter = 33;
 ringCircleDiameter = 6;
 ringTorusOffsetZ = 7.5 + ringCircleDiameter/2; //10+0.3-0.3;
 
+ballheadMountOffsetX = 30;
+ballheadMountOffsetZ = -extensionZ + 12;
+
+ballheadMountDia = ballheadNutRecessDia + 6;
+ballheadMountZ = 10;
+
 // $fn=360;
 
 module itemModule()
@@ -53,6 +60,20 @@ module itemModule()
 			tsp([0,0,0], d=mountArcRadius*2);
 			// Extension:
 			translate([0,0,-extensionZ]) simpleChamferedCylinder(d=mountArcRadius*2, h=extensionZ, cz=2, flip=true);
+
+			// Ball-head mount:
+			difference()
+			{
+				hull()
+				{
+
+					translate([-ballheadMountOffsetX, 0, ballheadMountOffsetZ]) simpleChamferedCylinderDoubleEnded(d=ballheadMountDia, h=-ballheadMountOffsetZ, cz=2);
+					centerOffsetZ = -extensionZ-0.53; // 0.5 smallest w/o overhangs
+					translate([0, 0, centerOffsetZ]) simpleChamferedCylinderDoubleEnded(d=ballheadMountDia+8.9, h=-centerOffsetZ, cz=2);
+				}
+				// Trim so the final piece doesn't extend below the extension:
+				tcu([-200, -200, -extensionZ-400], 400);
+			}
 
 			// Bottom support:
 			difference()
@@ -146,7 +167,18 @@ module itemModule()
 		// Bolt removal nut hole:
 		tcy([0,0,-100], d=ballheadThreadHoleDia, h=100);
 		// Bolt removal nut recess:
-		tcy([0,0,boltThreadsOffsetZ-balheadNutThickness], d=12.6, h=100, $fn=6);
+		tcy([0,0,boltThreadsOffsetZ-balheadNutThickness], d=ballheadNutRecessDia, h=100, $fn=6);
+		
+		// Ball-head mount:
+		translate([-ballheadMountOffsetX, 0, 0])
+		{
+			// Hole for the threads:
+			tcy([0, 0, -50], d=ballheadThreadHoleDia, h=100);
+			// Recess for the stop on the ball-head threaded section:
+			tcy([0,0,-10+ballheadMountOffsetZ], d=ballheadThreadStopDia, h=10);
+			// Nut:
+			tcy([0,0,ballheadMountOffsetZ+3.7], d=ballheadNutRecessDia, h=10, $fn=6);
+		}
 	}
 }
 
@@ -179,7 +211,7 @@ module testPrint()
 
 module clip(d=0)
 {
-	tcu([-200, -400-d, -200], 400);
+	// tcu([-200, -400-d, -200], 400);
 }
 
 if(developmentRender)
