@@ -129,7 +129,7 @@ module itemModule()
 		}
 
 		cameraLowerBodyDia = 53;
-		translate([boltHeadDia/2, 0, cameraLowerBodyDia/2+9.5]) 
+		translate([boltHeadDia/2, 0, cameraLowerBodyDia/2+9.4]) 
 		{
 			rotate([-90,0,0]) difference()
 			{
